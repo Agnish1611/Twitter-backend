@@ -10,7 +10,7 @@ class TweetService{
         try {
             const tweetContent = tweetData.content;
 
-            let tags = tweetContent.split(' ');
+            let tags = Array.from(new Set(tweetContent.split(' ')));
             tags = tags.filter((tag) => {
                 let flag=0;
                 if (tag[0]=='#'){
@@ -50,6 +50,31 @@ class TweetService{
             });
 
             return tweet;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async destroy(tweetId) {
+        try {
+            const tags = await this.hashtagRepository.findById(tweetId);
+            tags.forEach(async (tag) => {
+                let newTweets = [];
+                for (let i=0;i<tag.tweets.length;i++){
+                    if (tag.tweets[i] == tweetId) {
+                        continue;
+                    }
+                    newTweets.push(tag.tweets[i]);
+                }
+                if (newTweets.length == 0) {
+                    await this.hashtagRepository.destroy(tag._id);
+                }
+                else {
+                    await this.hashtagRepository.update(tag._id, {tweets: newTweets});
+                }
+            });
+            const response = await this.tweetRepository.destroy(tweetId);
+            return response;
         } catch (error) {
             throw error;
         }
