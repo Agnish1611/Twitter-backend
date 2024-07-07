@@ -1,4 +1,4 @@
-const { Hashtag } = require('../models/index');
+const { Hashtag } = require('../models');
 
 class HashtagRepository {
     async create(hashtag) {
@@ -68,15 +68,6 @@ class HashtagRepository {
     async destroy(hashtagId) {
         try {
             const response = await Hashtag.findByIdAndDelete(hashtagId);
-            return response;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    async update(hashtagId, data) {
-        try {
-            const response = await Hashtag.findByIdAndUpdate(hashtagId, data);
             return response;
         } catch (error) {
             throw error;

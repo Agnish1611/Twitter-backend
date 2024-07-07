@@ -1,7 +1,7 @@
-const { TweetService } = require('../services/index');
+const { TweetService } = require('../services');
 
 const { StatusCodes } = require('http-status-codes');
-const { SuccessResponse, ErrorResponse } = require('../utils/common/index');
+const { SuccessResponse, ErrorResponse } = require('../utils/common');
 
 const tweetService = new TweetService();
 

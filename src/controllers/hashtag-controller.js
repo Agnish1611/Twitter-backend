@@ -1,7 +1,7 @@
-const { HashtagService } = require('../services/index');
+const { HashtagService } = require('../services');
 
 const { StatusCodes } = require('http-status-codes');
-const { SuccessResponse, ErrorResponse } = require('../utils/common/index');
+const { SuccessResponse, ErrorResponse } = require('../utils/common');
 
 const hashtagService = new HashtagService();
 

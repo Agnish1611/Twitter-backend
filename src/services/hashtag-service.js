@@ -1,4 +1,4 @@
-const { HashtagRepository } = require('../repositories/index');
+const { HashtagRepository } = require('../repositories');
 
 class HashtagService {
     constructor() {

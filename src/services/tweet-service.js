@@ -1,4 +1,4 @@
-const { TweetRepository, HashtagRepository } = require('../repositories/index');
+const { TweetRepository, HashtagRepository } = require('../repositories');
 
 class TweetService{
     constructor(){
