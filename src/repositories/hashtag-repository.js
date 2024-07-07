@@ -19,6 +19,24 @@ class HashtagRepository {
         }
     }
 
+    async findTags(filter){
+        try {
+            const tags = await Hashtag.find(filter);
+            return tags;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async findTagById(id){
+        try {
+            const tags = await Hashtag.findById(id).populate('tweets');
+            return tags;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async findByName(data) {
         try {
             const tags = await Hashtag.find({title: data});
@@ -28,7 +46,7 @@ class HashtagRepository {
         }
     }
 
-    async findById(id) {
+    async findByTweetId(id) {
         try {
             let tags = await Hashtag.find();
             tags = tags.filter((tag) => {

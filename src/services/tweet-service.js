@@ -57,20 +57,12 @@ class TweetService{
 
     async destroy(tweetId) {
         try {
-            const tags = await this.hashtagRepository.findById(tweetId);
+            const tags = await this.hashtagRepository.findByTweetId(tweetId);
             tags.forEach(async (tag) => {
-                let newTweets = [];
-                for (let i=0;i<tag.tweets.length;i++){
-                    if (tag.tweets[i] == tweetId) {
-                        continue;
-                    }
-                    newTweets.push(tag.tweets[i]);
-                }
-                if (newTweets.length == 0) {
+                await tag.tweets.pull(tweetId);
+                await tag.save();
+                if (tag.tweets.length == 0){
                     await this.hashtagRepository.destroy(tag._id);
-                }
-                else {
-                    await this.hashtagRepository.update(tag._id, {tweets: newTweets});
                 }
             });
             const response = await this.tweetRepository.destroy(tweetId);
